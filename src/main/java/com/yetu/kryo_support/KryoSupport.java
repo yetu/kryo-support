@@ -1,4 +1,4 @@
-package com.yetu.gatewayprotocol.kryo;
+package com.yetu.kryo_support;
 
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.io.*;

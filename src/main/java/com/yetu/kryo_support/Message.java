@@ -1,6 +1,4 @@
-package com.yetu.gatewayprotocol.kryo;
-
-import java.util.UUID;
+package com.yetu.kryo_support;
 
 /**
  * Marker interface for Kryo messages
