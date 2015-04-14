@@ -18,14 +18,6 @@ public class KryoSupport {
     private static KryoSupport instance = new KryoSupport();
 
     /**
-     * Singleton pattern: get the Kryo instance
-     * @return The singleton instance
-     */
-    public static KryoSupport get() {
-        return instance;
-    }
-
-    /**
      * Initial buffer size for marshalling
      */
     private static final int BUFFER_SIZE = 512;
@@ -33,7 +25,7 @@ public class KryoSupport {
     /**
      * Map of registered classes and their IDs
      */
-    private final Map<Class<? extends Message>, Integer> registrations = new HashMap<>();
+    private Map<Class<? extends Message>, Integer> registrations = null;
 
     /**
      * Set to true upon the creation of the first Kryo instance in the pool to ensure that IDs are always coherent
@@ -66,7 +58,20 @@ public class KryoSupport {
     };
 
     // Build pool with SoftReferences enabled
-    private final KryoPool pool = new KryoPool.Builder(factory).softReferences().build();
+    private KryoPool pool = null;
+
+    private KryoSupport() {
+        initializeKryo();
+    }
+
+    /**
+     * Initialize (or re-initialize) the KryoSupport class
+     */
+    private void initializeKryo() {
+        pool = new KryoPool.Builder(factory).softReferences().build();
+        registrations = new HashMap<>();
+        registrationFinished = false;
+    }
 
     /**
      * Register a class with Kryo. All registrations must be completed before the first access to Kryo.
@@ -75,7 +80,7 @@ public class KryoSupport {
      * @throws IllegalStateException if the registration is already frozen
      * @throws IllegalArgumentException if the class or ID has already been registered
      */
-    public void registerClass(Class<? extends Message> klazz, int id) {
+    private void registerClass(Class<? extends Message> klazz, int id) {
         if (registrationFinished) {
             throw new IllegalStateException("Attempted to register class " + klazz + "After first use of Kryo. All classes must be registered before the first use.");
         }
@@ -96,7 +101,7 @@ public class KryoSupport {
      * @param message The message to marshalled
      * @return The marshalled bytes
      */
-    public byte[] marshallMessage (Message message) {
+    private byte[] marshallMessage (Message message) {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream(BUFFER_SIZE);
         Output output = new UnsafeOutput(outputStream);
         Kryo kryo = pool.borrow();
@@ -105,6 +110,22 @@ public class KryoSupport {
         pool.release(kryo);
         return outputStream.toByteArray();
     }
+
+    /**
+     * Initialize the Singleton.
+     */
+    public static void initialize() {
+        instance.initializeKryo();
+    }
+
+    /**
+     * Singleton pattern: get the Kryo instance
+     * @return The singleton instance
+     */
+    public static KryoSupport get() {
+        return instance;
+    }
+
 
     /**
      * Convenience method. Calls registerClass on the Kryo singleton
@@ -123,7 +144,7 @@ public class KryoSupport {
      * @return The marshalled bytes
      */
     public static byte[] marshall (Message message) {
-        return KryoSupport.get().marshallMessage(message);
+        return instance.marshallMessage(message);
     }
 
     /**
@@ -133,7 +154,7 @@ public class KryoSupport {
      */
     public static Message unmarshall(byte[] bytes) {
         Input input = new UnsafeInput(bytes);
-        return KryoSupport.get().unmarshallMessage(input);
+        return instance.unmarshallMessage(input);
     }
 
     /**
@@ -143,7 +164,7 @@ public class KryoSupport {
      */
     public static Message unmarshall(ByteBuffer buffer) {
         Input input = new UnsafeMemoryInput(buffer);
-        return KryoSupport.get().unmarshallMessage(input);
+        return instance.unmarshallMessage(input);
     }
 
     /**
@@ -151,7 +172,7 @@ public class KryoSupport {
      * @param input The Kryo Input containing the bytes to unmarshall
      * @return The unmarshalled Message
      */
-    public Message unmarshallMessage(Input input) {
+    private Message unmarshallMessage(Input input) {
         Kryo kryo = pool.borrow();
         Message message = (Message)kryo.readClassAndObject(input);
         pool.release(kryo);
