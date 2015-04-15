@@ -85,3 +85,6 @@ $ mvn -B release:perform
 This will only work if the version number in your `pom.xml` is a SNAPSHOT version. It will remove the -SNAPSHOT before
 publishing and then increment the release number and add SNAPSHOT to it (i.e., 1.0.0-SNAPSHOT is released as 1.0.0 and
 the POM is left with 1.0.1-SNAPSHOT).
+
+Once you have performed the release, you need to go to https://bintray.com/yetu/maven/kryo-support again and publish it.
+
