@@ -30,7 +30,7 @@ Once you have done that you need to add the following dependency:
 
 ```xml
   <dependency>
-	<groupId>com.yetu</groupId>
+	<groupId>com.yetu.kryo-support</groupId>
 	<artifactId>kryo-support</artifactId>
     <version>1.0.0</version>
   </dependency>
@@ -73,11 +73,13 @@ For more examples and usage details, look at the tests and the JavaDocs.
 
 Publishing to Bintray uses the `maven-release-plugin`. You can learn more at http://veithen.github.io/2013/05/26/github-bintray-maven-release-plugin.html.
 
-In short, once you have added your credentials to your `$HOME/.m2/settings.xml`, you need to do the following:
+In short, once you have added your credentials to your `$HOME/.m2/settings.xml`, you need to first go to
+https://bintray.com/yetu/maven/kryo-support, create the new version (using the `New Version` link) and then do the
+following:
 
 ```
-mvn -B release:prepare
-mvn release:perform
+$ mvn -B release:prepare
+$ mvn -B release:perform
 ```
 
 This will only work if the version number in your `pom.xml` is a SNAPSHOT version. It will remove the -SNAPSHOT before
