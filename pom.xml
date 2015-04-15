@@ -8,7 +8,7 @@
 	
 	<groupId>com.yetu.kryo-support</groupId>
 	<artifactId>kryo-support</artifactId>
-	<version>1.0.1</version>
+	<version>1.0.2-SNAPSHOT</version>
 	
 	<name>yetu Kryo Support utilities</name>
 	<description>Utility classes to make it easier to work with Kryo</description>
@@ -22,7 +22,7 @@
 		<connection>scm:git:git@github.com:yetu/kryo-support.git</connection>
 		<developerConnection>scm:git:git@github.com:yetu/kryo-support.git</developerConnection>
 		<url>https://github.com/yetu/kryo-support</url>
-		<tag>kryo-support-1.0.1</tag>
+		<tag>kryo-support-1.0.0</tag>
 	</scm>
 
 	<!-- See http://veithen.github.io/2013/05/26/github-bintray-maven-release-plugin.html -->
