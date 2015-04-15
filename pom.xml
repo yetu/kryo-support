@@ -8,7 +8,7 @@
 	
 	<groupId>com.yetu</groupId>
 	<artifactId>kryo-support</artifactId>
-	<version>0.1-SNAPSHOT</version>
+	<version>1.0-SNAPSHOT</version>
 	
 	<name>yetu Kryo Support utilities</name>
 	<description>Utility classes to make it easier to work with Kryo</description>
@@ -22,7 +22,16 @@
 		<connection>scm:git:git@github.com:yetu/kryo-support.git</connection>
 		<developerConnection>scm:git:git@github.com:yetu/kryo-support.git</developerConnection>
 		<url>https://github.com/yetu/kryo-support</url>
+		<tag>HEAD</tag>
 	</scm>
+
+	<!-- See http://veithen.github.io/2013/05/26/github-bintray-maven-release-plugin.html -->
+	<distributionManagement>
+		<repository>
+			<id>bintray</id>
+			<url>https://api.bintray.com/maven/yetu/kryo-support/kryo-support</url>
+		</repository>
+	</distributionManagement>
 	
 	<issueManagement>
 		<url>https://yetu-dev.atlassian.net/browse/GAT</url>
@@ -135,6 +144,16 @@
 					</filesets>
 				</configuration>
 			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-release-plugin</artifactId>
+				<version>2.5.1</version>
+				<configuration>
+					<useReleaseProfile>false</useReleaseProfile>
+					<releaseProfiles>release</releaseProfiles>
+					<autoVersionSubmodules>true</autoVersionSubmodules>
+				</configuration>
+			</plugin>
 		</plugins>
 		
 		<pluginManagement>
@@ -180,6 +199,38 @@
 			</plugins>
 		</pluginManagement>
 	</build>
+
+	<profiles>
+		<profile>
+			<id>release</id>
+			<build>
+				<plugins>
+					<plugin>
+						<artifactId>maven-source-plugin</artifactId>
+						<executions>
+							<execution>
+								<id>attach-sources</id>
+								<goals>
+									<goal>jar</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+					<plugin>
+						<artifactId>maven-javadoc-plugin</artifactId>
+						<executions>
+							<execution>
+								<id>attach-javadocs</id>
+								<goals>
+									<goal>jar</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
 	
 	<dependencies>
 		<dependency>
