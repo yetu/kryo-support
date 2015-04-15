@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	
 	<prerequisites>
@@ -8,7 +8,7 @@
 	
 	<groupId>com.yetu</groupId>
 	<artifactId>kryo-support</artifactId>
-	<version>1.0.0-SNAPSHOT</version>
+	<version>1.0.0</version>
 	
 	<name>yetu Kryo Support utilities</name>
 	<description>Utility classes to make it easier to work with Kryo</description>
@@ -22,7 +22,7 @@
 		<connection>scm:git:git@github.com:yetu/kryo-support.git</connection>
 		<developerConnection>scm:git:git@github.com:yetu/kryo-support.git</developerConnection>
 		<url>https://github.com/yetu/kryo-support</url>
-		<tag>HEAD</tag>
+		<tag>kryo-support-1.0.0</tag>
 	</scm>
 
 	<!-- See http://veithen.github.io/2013/05/26/github-bintray-maven-release-plugin.html -->
