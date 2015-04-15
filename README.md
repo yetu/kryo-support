@@ -15,7 +15,7 @@ you need to add the repository to your `pom.xml`:
 <repositories>
   <repository>
     <id>bintray</id>
-    <url>http://dl.bintray.com/yetu/kryo-support</url>
+    <url>http://dl.bintray.com/yetu/maven</url>
     <releases>
       <enabled>true</enabled>
     </releases>
