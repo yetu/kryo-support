@@ -26,13 +26,15 @@ public class TestMessage extends Message { // All messages must extend the Messa
 }
 
 public class Example {
-    KryoSupport.register(TestMessage.class, 1); // ID numbers must be unique
+    public static void main(String args[]) {
+        KryoSupport.register(TestMessage.class, 1); // ID numbers must be unique
     
-    TestMessage message = new TestMessage(42, 4242);
+        TestMessage message = new TestMessage(42, 4242);
     
-    byte[] bytes = KryoSupport.marshall(message);
-    TestMessage result = (TestMessage)KryoSupport.unmarshall(bytes);
+        byte[] bytes = KryoSupport.marshall(message);
+        TestMessage result = (TestMessage)KryoSupport.unmarshall(bytes);
+    }
 }
 ```
 
-For more examples, look at the tests.
+For more examples and usage details, look at the tests and the JavaDocs.
