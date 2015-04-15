@@ -20,7 +20,7 @@ public class KryoSupport {
     /**
      * Initial buffer size for marshalling
      */
-    private static final int BUFFER_SIZE = 512;
+    private static final int INITIAL_BUFFER_SIZE = 512;
 
     /**
      * Map of registered classes and their IDs
@@ -102,13 +102,26 @@ public class KryoSupport {
      * @return The marshalled bytes
      */
     private byte[] marshallMessage (Message message) {
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream(BUFFER_SIZE);
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream(INITIAL_BUFFER_SIZE);
         Output output = new UnsafeOutput(outputStream);
         Kryo kryo = pool.borrow();
         kryo.writeClassAndObject(output, message);
         output.close();
         pool.release(kryo);
         return outputStream.toByteArray();
+    }
+
+    /**
+     * Unmarshall a Kryo Input into a buffer
+     * @param input The Kryo Input containing the bytes to unmarshall
+     * @return The unmarshalled Message
+     */
+    private Message unmarshallMessage(Input input) {
+        Kryo kryo = pool.borrow();
+        Message message = (Message)kryo.readClassAndObject(input);
+        pool.release(kryo);
+
+        return message;
     }
 
     /**
@@ -119,7 +132,7 @@ public class KryoSupport {
     }
 
     /**
-     * Singleton pattern: get the Kryo instance
+     * Singleton pattern: get the KryoSupport instance
      * @return The singleton instance
      */
     public static KryoSupport get() {
@@ -165,18 +178,5 @@ public class KryoSupport {
     public static Message unmarshall(ByteBuffer buffer) {
         Input input = new UnsafeMemoryInput(buffer);
         return instance.unmarshallMessage(input);
-    }
-
-    /**
-     * Unmarshall a Kryo Input into a buffer
-     * @param input The Kryo Input containing the bytes to unmarshall
-     * @return The unmarshalled Message
-     */
-    private Message unmarshallMessage(Input input) {
-        Kryo kryo = pool.borrow();
-        Message message = (Message)kryo.readClassAndObject(input);
-        pool.release(kryo);
-
-        return message;
     }
 }

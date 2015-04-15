@@ -17,6 +17,16 @@ class TestMessage implements Message {
     public int getValue() {
         return value;
     }
+
+    @Override
+    public boolean equals(Object that) {
+        return that.getClass() == this.getClass() && ((TestMessage)that).getValue() == getValue();
+    }
+
+    @Override
+    public String toString() {
+        return getClass().getSimpleName() + "(" + getValue() + ")";
+    }
 }
 
 class TestComplexMessage implements Message {
@@ -36,6 +46,18 @@ class TestComplexMessage implements Message {
 
     public TestMessage getMessage2() {
         return message2;
+    }
+
+    @Override
+    public boolean equals(Object that) {
+        return that.getClass() == this.getClass() &&
+                ((TestComplexMessage)that).getMessage1() == getMessage1() &&
+                ((TestComplexMessage)that).getMessage2() == getMessage2();
+    }
+
+    @Override
+    public String toString() {
+        return getClass().getSimpleName() + "(" + getMessage1() + "," + getMessage2() + ")";
     }
 }
 
@@ -85,7 +107,7 @@ public class KryoSupportTest {
         byte[] result = KryoSupport.marshall(testMessage1);
         TestMessage unmarshallResult = (TestMessage)KryoSupport.unmarshall(result);
 
-        assertEquals(unmarshallResult.getValue(), testMessage1.getValue());
+        assertEquals(testMessage1, unmarshallResult);
     }
 
     @Test
@@ -94,28 +116,30 @@ public class KryoSupportTest {
 
         byte[] result = KryoSupport.marshall(complexMessage);
         TestComplexMessage unmarshallResult = (TestComplexMessage)KryoSupport.unmarshall(result);
+        assertEquals(complexMessage, unmarshallResult);
+    }
 
-        TestMessage result1 = unmarshallResult.getMessage1();
-        TestMessage result2 = unmarshallResult.getMessage2();
+    @Test
+    public void testMarshallAndUnmarshallSameObject() throws Exception {
+        register();
+        TestComplexMessage complexMessage2 = new TestComplexMessage(testMessage1, testMessage1);
 
-        assertEquals(result1.getValue(), testMessage1.getValue());
-        assertEquals(result2.getValue(), testMessage2.getValue());
+        byte[] result = KryoSupport.marshall(complexMessage2);
+        TestComplexMessage unmarshallResult = (TestComplexMessage)KryoSupport.unmarshall(result);
+        assertEquals(complexMessage2, unmarshallResult);
+        assertSame(complexMessage2.getMessage1(), complexMessage2.getMessage2());
     }
 
     @Test
     public void testMarshallAndUnmarshallDifferentKryos() throws Exception {
         register();
+
         byte[] result = KryoSupport.marshall(complexMessage);
 
         initialize();
         register();
 
         TestComplexMessage unmarshallResult = (TestComplexMessage)KryoSupport.unmarshall(result);
-
-        TestMessage result1 = unmarshallResult.getMessage1();
-        TestMessage result2 = unmarshallResult.getMessage2();
-
-        assertEquals(result1.getValue(), testMessage1.getValue());
-        assertEquals(result2.getValue(), testMessage2.getValue());
+        assertEquals(complexMessage, unmarshallResult);
     }
 }

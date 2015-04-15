@@ -147,13 +147,11 @@
 						<basedir>${basedir}</basedir>
 						<header>src/etc/header.txt</header>
 						<quiet>false</quiet>
-						<failIfMissing>true</failIfMissing>
+						<failIfMissing>false</failIfMissing>
 						<strictCheck>true</strictCheck>
 						<aggregate>true</aggregate>
 						<includes>
 							<include>**/com/yetu/**/*.java</include>
-							<include>**/feature.xml</include>
-							<include>**/OSGI-INF/*.xml</include>
 						</includes>
 						<excludes>
 							<exclude>target/**</exclude>
@@ -162,7 +160,7 @@
 						</excludes>
 						<useDefaultExcludes>true</useDefaultExcludes>
 						<properties>
-							<year>2014</year>
+							<year>2015</year>
 						</properties>
 						<encoding>UTF-8</encoding>
 					</configuration>
