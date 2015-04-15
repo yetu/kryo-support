@@ -6,9 +6,9 @@
 		<maven>3.0</maven>
 	</prerequisites>
 	
-	<groupId>com.yetu.kryo-support</groupId>
+	<groupId>com.yetu</groupId>
 	<artifactId>kryo-support</artifactId>
-	<version>1.0.1-SNAPSHOT</version>
+	<version>0.1.0-SNAPSHOT</version>
 	
 	<name>yetu Kryo Support utilities</name>
 	<description>Utility classes to make it easier to work with Kryo</description>
@@ -29,7 +29,7 @@
 	<distributionManagement>
 		<repository>
 			<id>bintray</id>
-			<url>https://api.bintray.com/maven/yetu/kryo-support/kryo-support</url>
+			<url>https://api.bintray.com/maven/yetu/kryo-support</url>
 		</repository>
 	</distributionManagement>
 	
