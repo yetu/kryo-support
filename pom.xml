@@ -29,7 +29,7 @@
 	<distributionManagement>
 		<repository>
 			<id>bintray</id>
-			<url>https://api.bintray.com/maven/yetu/kryo-support</url>
+			<url>https://api.bintray.com/maven/yetu/maven/kryo-support</url>
 		</repository>
 	</distributionManagement>
 	
