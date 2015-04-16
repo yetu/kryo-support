@@ -32,7 +32,7 @@ Once you have done that you need to add the following dependency:
   <dependency>
 	<groupId>com.yetu.kryo-support</groupId>
 	<artifactId>kryo-support</artifactId>
-    <version>0.1.3</version>
+    <version>0.1.4</version>
   </dependency>
 ```
 

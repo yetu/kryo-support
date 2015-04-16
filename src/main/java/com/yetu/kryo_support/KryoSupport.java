@@ -25,7 +25,7 @@ public class KryoSupport {
     /**
      * Map of registered classes and their IDs
      */
-    private Map<Class<? extends Message>, Integer> registrations = null;
+    private Map<Class<?>, Integer> registrations = null;
 
     /**
      * Set to true upon the creation of the first Kryo instance in the pool to ensure that IDs are always coherent
@@ -49,7 +49,7 @@ public class KryoSupport {
             kryo.setDefaultSerializer(TaggedFieldSerializer.class);
 
             // Register all registered classes with Kryo
-            for (Class<? extends Message> klazz : registrations.keySet()) {
+            for (Class<?> klazz : registrations.keySet()) {
                 kryo.register(klazz, registrations.get(klazz));
             }
 
@@ -80,7 +80,7 @@ public class KryoSupport {
      * @throws IllegalStateException if the registration is already frozen
      * @throws IllegalArgumentException if the class or ID has already been registered
      */
-    private void registerClass(Class<? extends Message> klazz, int id) {
+    private void registerClass(Class<?> klazz, int id) {
         if (registrationFinished) {
             throw new IllegalStateException("Attempted to register class " + klazz + "After first use of Kryo. All classes must be registered before the first use.");
         }
@@ -147,7 +147,7 @@ public class KryoSupport {
      * @throws IllegalStateException if the registration is already frozen
      * @throws IllegalArgumentException if the class or ID has already been registered
      */
-    public static void register(Class<? extends Message> klazz, int id) {
+    public static void register(Class<?> klazz, int id) {
         KryoSupport.get().registerClass(klazz, id);
     }
 
