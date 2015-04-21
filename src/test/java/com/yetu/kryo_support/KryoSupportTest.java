@@ -11,8 +11,6 @@ import static org.junit.Assert.assertSame;
 class TestMessage implements Message {
     @Tag(1) private int value;
 
-    private TestMessage() { }
-
     public TestMessage(int value) {
         this.value = value;
     }
@@ -41,8 +39,6 @@ class TestMessage implements Message {
 class TestComplexMessage implements Message {
     @Tag(1) private TestMessage message1;
     @Tag(2) private TestMessage message2;
-
-    private TestComplexMessage() { }
 
     public TestComplexMessage(TestMessage message2, TestMessage message1) {
         this.message2 = message2;
@@ -79,8 +75,6 @@ class TestComplexMessage implements Message {
 class TestUntaggedMessage implements Message {
     int value;
     TestMessage message;
-
-    private TestUntaggedMessage() { }
 
     public TestUntaggedMessage(int value, TestMessage message) {
         this.value = value;

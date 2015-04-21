@@ -5,6 +5,7 @@ import com.esotericsoftware.kryo.io.*;
 import com.esotericsoftware.kryo.pool.KryoFactory;
 import com.esotericsoftware.kryo.pool.KryoPool;
 import com.esotericsoftware.kryo.serializers.TaggedFieldSerializer;
+import org.objenesis.strategy.StdInstantiatorStrategy;
 
 import java.io.ByteArrayOutputStream;
 import java.nio.ByteBuffer;
@@ -47,6 +48,7 @@ public class KryoSupport {
 
             kryo.setRegistrationRequired(true);
             kryo.setDefaultSerializer(TaggedFieldSerializer.class);
+            kryo.setInstantiatorStrategy(new StdInstantiatorStrategy());
 
             // Register all registered classes with Kryo
             for (Class<?> klazz : registrations.keySet()) {
