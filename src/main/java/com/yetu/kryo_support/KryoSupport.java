@@ -99,7 +99,7 @@ public class KryoSupport {
     }
 
     /**
-     * Checks whether a class was registered with kryo.
+     * Checks whether a class was registered with kryo
      * @param klazz Class to check
      * @return true if class was registered
     */
