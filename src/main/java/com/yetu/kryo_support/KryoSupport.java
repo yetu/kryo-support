@@ -99,6 +99,23 @@ public class KryoSupport {
     }
 
     /**
+     * Checks whether a class was registered with kryo.
+     * @param klazz Class to check
+     * @return true if class was registered
+    */
+    public boolean isClassRegistered(Class<?> klazz) {
+    	Kryo kryo = pool.borrow();
+    	
+    	try {
+    		kryo.getRegistration(klazz);
+    	} catch(IllegalArgumentException e) {
+    		return false;
+    	}
+
+    	return true;
+    }
+    
+    /**
      * Marshall a message into a byte Array
      * @param message The message to marshalled
      * @return The marshalled bytes
