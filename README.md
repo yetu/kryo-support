@@ -6,6 +6,10 @@ to use. By using this we ensure that:
 * All projects use the same Kryo settings
 * All projects depend on the same version of Kryo
 
+## Responsible persons
+Mario Camou (mcamou@tecnoguru.com)
+Sebastian Garn (sebastian.garn@posteo.de)
+
 ## Usage
 
 The kryo-support package is published to [Bintray](https://bintray.com/yetu/maven/kryo-support). To be able to use it,
